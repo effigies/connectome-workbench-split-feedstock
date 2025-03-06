@@ -37,6 +37,8 @@ requirements:
     - {{ cdt('libxxf86vm') }}        # [linux]
     - {{ cdt('libxext') }}           # [linux]
   host:
+    - noqt6                          # [build_variant == "qt"]
+    - noqt5                          # [build_variant == "qt6"]
     - qt-main                        # [build_variant == "qt"]
     - qt6-main                       # [build_variant == "qt6"]
     - openssl
@@ -75,6 +77,8 @@ outputs:
         - {{ cdt('libxxf86vm') }}        # [linux]
         - {{ cdt('libxext') }}           # [linux]
       host:
+        - noqt6                          # [build_variant == "qt"]
+        - noqt5                          # [build_variant == "qt6"]
         - qt-main                        # [build_variant == "qt"]
         - qt6-main                       # [build_variant == "qt6"]
         - openssl
@@ -112,6 +116,8 @@ outputs:
         - {{ cdt('libxxf86vm') }}        # [linux]
         - {{ cdt('libxext') }}           # [linux]
       host:
+        - noqt6                          # [build_variant == "qt"]
+        - noqt5                          # [build_variant == "qt6"]
         - qt-main                        # [build_variant == "qt"]
         - qt6-main                       # [build_variant == "qt6"]
         - openssl
