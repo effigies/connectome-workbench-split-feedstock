@@ -20,8 +20,6 @@ freetype:
 - '2'
 openssl:
 - '3'
-qt:
-- '5.15'
 qt6_main:
 - '6.8'
 qt_main:
