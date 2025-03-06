@@ -1,3 +1,3 @@
 build_variant:
-  - "qt"
+  - "qt5"
   - "qt6"
