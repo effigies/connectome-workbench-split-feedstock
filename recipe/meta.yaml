@@ -1,5 +1,8 @@
 {% set name = "connectome-workbench" %}
 {% set version = "2.0.1" %}
+{% set build = 2 %}
+
+{% set build = build + 100 %}  # [build_variant == "qt6"]
 
 package:
   name: {{ name }}-split
@@ -13,7 +16,8 @@ source:
     - patches/0001-Fix-unsafe-narrowing.patch
 
 build:
-  number: 1
+  number: {{ build }}
+  string: "{{ build_variant }}_h{{ PKG_HASH }}_{{ build }}"
   skip: true  # [osx or win]
 
 requirements:
@@ -33,10 +37,15 @@ requirements:
     - {{ cdt('libxxf86vm') }}        # [linux]
     - {{ cdt('libxext') }}           # [linux]
   host:
-    - qt
+    - noqt6                          # [build_variant == "qt5"]
+    - noqt5                          # [build_variant == "qt6"]
+    - qt-main                        # [build_variant == "qt5"]
+    - qt6-main                       # [build_variant == "qt6"]
     - openssl
     # 1.2 is ABI compatible with 1.3, so this provides more flexibility
-    - libzlib =1.2
+    - libzlib =1.2                   # [build_variant == "qt5"]
+    # qt6 is build with 1.3
+    - libzlib =1.3                   # [build_variant == "qt6"]
     - zlib
     - freetype
     - libglu                         # [linux]
@@ -68,17 +77,20 @@ outputs:
         - {{ cdt('libxxf86vm') }}        # [linux]
         - {{ cdt('libxext') }}           # [linux]
       host:
-        - qt
+        - noqt6                          # [build_variant == "qt5"]
+        - noqt5                          # [build_variant == "qt6"]
+        - qt-main                        # [build_variant == "qt5"]
+        - qt6-main                       # [build_variant == "qt6"]
         - openssl
-        - libzlib =1.2
+        - libzlib =1.2                   # [build_variant == "qt5"]
+        - libzlib =1.3                   # [build_variant == "qt6"]
         - zlib
         - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
       run:
-        - qt-main
-        - libgl                             # [linux]
-        - libglu                            # [linux]
+        - libgl                          # [linux]
+        - libglu                         # [linux]
     files:
       include:
         - bin/wb_view
@@ -104,17 +116,20 @@ outputs:
         - {{ cdt('libxxf86vm') }}        # [linux]
         - {{ cdt('libxext') }}           # [linux]
       host:
-        - qt
+        - noqt6                          # [build_variant == "qt5"]
+        - noqt5                          # [build_variant == "qt6"]
+        - qt-main                        # [build_variant == "qt5"]
+        - qt6-main                       # [build_variant == "qt6"]
         - openssl
-        - libzlib =1.2
+        - libzlib =1.2                   # [build_variant == "qt5"]
+        - libzlib =1.3                   # [build_variant == "qt6"]
         - zlib
         - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
       run:
-        - qt-main
-        - libgl                             # [linux]
-        - libglu                            # [linux]
+        - libgl                          # [linux]
+        - libglu                         # [linux]
     files:
       include:
         - bin/wb_command
