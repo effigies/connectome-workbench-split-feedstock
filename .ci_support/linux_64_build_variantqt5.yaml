@@ -1,5 +1,5 @@
 build_variant:
-- qt
+- qt5
 c_stdlib:
 - sysroot
 c_stdlib_version:

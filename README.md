@@ -36,10 +36,10 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_build_variantqt</td>
+              <td>linux_64_build_variantqt5</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24103&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/connectome-workbench-split-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_build_variantqt" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/connectome-workbench-split-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_build_variantqt5" alt="variant">
                 </a>
               </td>
             </tr><tr>
