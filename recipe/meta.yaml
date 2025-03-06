@@ -37,8 +37,8 @@ requirements:
     - {{ cdt('libxxf86vm') }}        # [linux]
     - {{ cdt('libxext') }}           # [linux]
   host:
-    - qt                             # [build_variant == "qt"]
-    - qt6                            # [build_variant == "qt6"]
+    - qt-main                        # [build_variant == "qt"]
+    - qt6-main                       # [build_variant == "qt6"]
     - openssl
     # 1.2 is ABI compatible with 1.3, so this provides more flexibility
     - libzlib =1.2
@@ -73,8 +73,8 @@ outputs:
         - {{ cdt('libxxf86vm') }}        # [linux]
         - {{ cdt('libxext') }}           # [linux]
       host:
-        - qt                             # [build_variant == "qt"]
-        - qt6                            # [build_variant == "qt6"]
+        - qt-main                        # [build_variant == "qt"]
+        - qt6-main                       # [build_variant == "qt6"]
         - openssl
         - libzlib =1.2
         - zlib
@@ -82,8 +82,6 @@ outputs:
         - libglu                         # [linux]
         - glew                           # [windows]
       run:
-        - qt-main                        # [build_variant == "qt"]
-        - qt6-main                       # [build_variant == "qt6"]
         - libgl                          # [linux]
         - libglu                         # [linux]
     files:
@@ -111,8 +109,8 @@ outputs:
         - {{ cdt('libxxf86vm') }}        # [linux]
         - {{ cdt('libxext') }}           # [linux]
       host:
-        - qt                             # [build_variant == "qt"]
-        - qt6                            # [build_variant == "qt6"]
+        - qt-main                        # [build_variant == "qt"]
+        - qt6-main                       # [build_variant == "qt6"]
         - openssl
         - libzlib =1.2
         - zlib
@@ -120,8 +118,6 @@ outputs:
         - libglu                         # [linux]
         - glew                           # [windows]
       run:
-        - qt-main                        # [build_variant == "qt"]
-        - qt6-main                       # [build_variant == "qt6"]
         - libgl                          # [linux]
         - libglu                         # [linux]
     files:
