@@ -1,0 +1,91 @@
+From 64f980e1f269fee3c069c2f3eff47c9ee2f6df08 Mon Sep 17 00:00:00 2001
+From: "Christopher J. Markiewicz" <markiewicz@stanford.edu>
+Date: Fri, 7 Mar 2025 11:26:22 -0500
+Subject: [PATCH] chore(build): Find QuaZip library
+
+---
+ src/CMakeLists.txt                       | 17 +++++++++++++++--
+ src/Operations/CMakeLists.txt            |  3 +++
+ src/Operations/OperationZipSceneFile.cxx |  5 +++++
+ src/Operations/OperationZipSpecFile.cxx  |  5 +++++
+ 4 files changed, 28 insertions(+), 2 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index c2aec0391..74cfbe08f 100755
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -501,9 +501,22 @@ ENDIF (ZLIB_FOUND)
+ # Try to find QuaZip, otherwise use bundled
+ #
+ SET(QUAZIP_RESULT "Not Found")
+-FIND_PACKAGE(QuaZip  QUIET)
++IF (WORKBENCH_USE_QT6)
++    FIND_PACKAGE(QuaZip-Qt6  QUIET)
++    IF (QuaZip-Qt6_FOUND)
++        SET(QUAZIP_FOUND 1)
++        SET(QUAZIP_RESULT "${QuaZip-Qt6_VERSION}    ${QuaZip-Qt6_DIR}")
++    ENDIF (QuaZip-Qt6_FOUND)
++ELSE (WORKBENCH_USE_QT6)
++    FIND_PACKAGE(QuaZip-Qt5  QUIET)
++    IF (QuaZip-Qt5_FOUND)
++        SET(QUAZIP_FOUND 1)
++        SET(QUAZIP_RESULT "${QuaZip-Qt5_VERSION}    ${QuaZip-Qt5_DIR}")
++    ENDIF (QuaZip-Qt5_FOUND)
++ENDIF (WORKBENCH_USE_QT6)
++
+ IF (QUAZIP_FOUND)
+-  SET(QUAZIP_RESULT "Using QuaZip Library ${QUAZIP_LIBRARIES}")
++    ADD_DEFINITIONS(-DHAVE_QUAZIP)
+ ELSE (QUAZIP_FOUND)
+     #
+     # Quazip needs this defined here for static linking on windows
+diff --git a/src/Operations/CMakeLists.txt b/src/Operations/CMakeLists.txt
+index a8b42c836..ef3cffde5 100644
+--- a/src/Operations/CMakeLists.txt
++++ b/src/Operations/CMakeLists.txt
+@@ -250,3 +250,6 @@ IF (OSMESA_FOUND)
+     INCLUDE_DIRECTORIES(${OSMESA_INCLUDE_DIRECTORY})
+ ENDIF (OSMESA_FOUND)
+ 
++IF (QUAZIP_FOUND)
++    TARGET_LINK_LIBRARIES(Operations QuaZip::QuaZip)
++ENDIF (QUAZIP_FOUND)
+diff --git a/src/Operations/OperationZipSceneFile.cxx b/src/Operations/OperationZipSceneFile.cxx
+index 769342097..5eae4732e 100644
+--- a/src/Operations/OperationZipSceneFile.cxx
++++ b/src/Operations/OperationZipSceneFile.cxx
+@@ -34,8 +34,13 @@
+ #include "ScenePathName.h"
+ #include "SpecFile.h"
+ 
++#ifdef HAVE_QUAZIP
++#include <quazip/quazip.h>
++#include <quazip/quazipfile.h>
++#else
+ #include "quazip.h"
+ #include "quazipfile.h"
++#endif // HAVE_QUAZIP
+ 
+ #include <QDir>
+ 
+diff --git a/src/Operations/OperationZipSpecFile.cxx b/src/Operations/OperationZipSpecFile.cxx
+index 34c2235e0..e67fbd923 100644
+--- a/src/Operations/OperationZipSpecFile.cxx
++++ b/src/Operations/OperationZipSpecFile.cxx
+@@ -26,8 +26,13 @@
+ #include "OperationException.h"
+ #include "SpecFile.h"
+ 
++#ifdef HAVE_QUAZIP
++#include <quazip/quazip.h>
++#include <quazip/quazipfile.h>
++#else
+ #include "quazip.h"
+ #include "quazipfile.h"
++#endif // HAVE_QUAZIP
+ 
+ //for cleanPath
+ #include <QDir>
+-- 
+2.48.1
+
