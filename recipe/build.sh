@@ -4,7 +4,7 @@ mkdir build
 cd build
 
 if [[ "$target_platform" == linux-* ]]; then
-    export CXX_FLAGS="$CXX_FLAGS -lGL -lGLU"
+    export CXXFLAGS="$CXXFLAGS -lGL -lGLU"
 fi
 
 if [[ "$build_variant" == "qt6" ]]; then
@@ -23,7 +23,7 @@ cmake $CMAKE_ARGS -GNinja \
     -DWORKBENCH_USE_QT6:BOOL=$WORKBENCH_USE_QT6 \
     -DCMAKE_BUILD_TYPE:STRING=Release \
     -DCMAKE_INSTALL_PREFIX:STRING=$PREFIX \
-    -DCMAKE_CXX_FLAGS="$CXX_FLAGS" \
+    -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
     ../src
 
 cmake --build .
