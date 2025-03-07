@@ -1,6 +1,6 @@
 {% set name = "connectome-workbench" %}
 {% set version = "2.0.1" %}
-{% set build = 3 %}
+{% set build = 4 %}
 
 {% set build = build + 100 %}  # [build_variant == "qt6"]
 
@@ -12,8 +12,6 @@ source:
   url: https://github.com/Washington-University/workbench/archive/v{{ version }}.tar.gz
   sha256: c80bb248d1d25b36dd92112b9d3fb4585474e117c0c49dc8a222d859624f0376
   patches:
-    - patches/0001-Import-cstdint-into-libCZI.h.patch
-    - patches/0001-Fix-unsafe-narrowing.patch
     - patches/0001-chore-build-Find-QuaZip-library.patch
 
 build:
