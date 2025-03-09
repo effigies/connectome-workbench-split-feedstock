@@ -1,6 +1,6 @@
 {% set name = "connectome-workbench" %}
 {% set version = "2.0.1" %}
-{% set build = 3 %}
+{% set build = 4 %}
 
 {% set build = build + 100 %}  # [build_variant == "qt6"]
 
@@ -53,6 +53,7 @@ requirements:
     - freetype
     - libglu                         # [linux]
     - glew                           # [windows]
+    - mesalib                        # [linux]
 
 test:
   commands:
@@ -92,6 +93,7 @@ outputs:
         - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
+        - mesalib                        # [linux]
       run:
         - libgl                          # [linux]
         - libglu                         # [linux]
@@ -132,6 +134,7 @@ outputs:
         - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
+        - mesalib                        # [linux]
       run:
         - libgl                          # [linux]
         - libglu                         # [linux]
