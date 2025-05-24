@@ -42,8 +42,6 @@ requirements:
     - libgl-devel                    # [linux]
     - libglx-devel                   # [linux]
   host:
-    - noqt6                          # [build_variant == "qt5"]
-    - noqt5                          # [build_variant == "qt6"]
     - qt-main                        # [build_variant == "qt5"]
     - qt6-main >6                    # [build_variant == "qt6"]
     - glib                           # [linux]
