@@ -6,8 +6,10 @@ cd build
 if [[ "$target_platform" == linux-* ]]; then
     export CXXFLAGS="$CXXFLAGS -lGL -lGLU"
     CMAKE="cmake"
+    CTEST="ctest"
 elif [[ "$target_platform" == osx-* ]]; then
     CMAKE="arch -x86_64 cmake"
+    CTEST="arch -x86_64 ctest"
 else
     echo "Unsupported platform: $target_platform"
     exit 1
@@ -36,6 +38,6 @@ $CMAKE $CMAKE_ARGS -GNinja \
 
 $CMAKE --build .
 
-ctest --extra-verbose --output-on-failure .
+$CTEST --extra-verbose --output-on-failure .
 
-cmake --install .
+$CMAKE --install .
