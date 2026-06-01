@@ -1,0 +1,30 @@
+From 4207ebc77441155efb778c27901fb95f497aedc9 Mon Sep 17 00:00:00 2001
+From: John Harwell <jharwell@wustl.edu>
+Date: Wed, 25 Mar 2026 11:34:37 -0500
+Subject: [PATCH 2/2] Another fix for FreeType 2.13 by adding a 'char*' cast to
+ the second argument to the FTContour constructor call.
+
+---
+ src/FtglFont/FTVectoriser.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/FtglFont/FTVectoriser.cpp b/src/FtglFont/FTVectoriser.cpp
+index 0c361f74d..0fecd5462 100644
+--- a/src/FtglFont/FTVectoriser.cpp
++++ b/src/FtglFont/FTVectoriser.cpp
+@@ -184,7 +184,11 @@ void FTVectoriser::ProcessContours()
+         endIndex = outline.contours[i];
+         contourLength =  (endIndex - startIndex) + 1;
+ 
+-        FTContour* contour = new FTContour(pointList, tagList, contourLength);
++        /*
++         * Another fix forf 2.13.  Cast tagList to 'char*'.
++         * In 2.13 'tagList' is 'unsigned char*'
++         */
++        FTContour* contour = new FTContour(pointList, (char*)tagList, contourLength);
+ 
+         contourList[i] = contour;
+ 
+-- 
+2.54.0
+

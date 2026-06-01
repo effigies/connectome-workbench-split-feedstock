@@ -15,6 +15,9 @@ source:
     - patches/0001-Import-cstdint-into-libCZI.h.patch
     - patches/0001-Fix-unsafe-narrowing.patch
     - patches/0001-chore-build-Find-QuaZip-library.patch
+    # Included in v2.1.0-222-gb08bb2854, remove after next release
+    - 0001-FreeType-2.13-changed-a-type-from-char-to-unsigned-c.patch
+    - 0002-Another-fix-for-FreeType-2.13-by-adding-a-char-cast-.patch
 
 build:
   number: {{ build }}
