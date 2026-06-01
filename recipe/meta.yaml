@@ -37,11 +37,9 @@ requirements:
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
     # libGL
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('libxdamage') }}        # [linux]
-    - {{ cdt('libxxf86vm') }}        # [linux]
-    - {{ cdt('libxext') }}           # [linux]
+    - {{ cdt('mesa-libgl-devel') }}  # [linux and build_variant == "qt5"]
+    - libgl-devel                    # [linux]
+    - libglx-devel                   # [linux]
   host:
     - noqt6                          # [build_variant == "qt5"]
     - noqt5                          # [build_variant == "qt6"]
@@ -83,11 +81,9 @@ outputs:
         - llvm-openmp  # [osx]
         - libgomp      # [linux]
         # libGL
-        - {{ cdt('mesa-libgl-devel') }}  # [linux]
-        - {{ cdt('mesa-dri-drivers') }}  # [linux]
-        - {{ cdt('libxdamage') }}        # [linux]
-        - {{ cdt('libxxf86vm') }}        # [linux]
-        - {{ cdt('libxext') }}           # [linux]
+        - {{ cdt('mesa-libgl-devel') }}  # [linux and build_variant == "qt5"]
+        - libgl-devel                    # [linux]
+        - libglx-devel                   # [linux]
       host:
         - noqt6                          # [build_variant == "qt5"]
         - noqt5                          # [build_variant == "qt6"]
@@ -131,11 +127,9 @@ outputs:
         - llvm-openmp  # [osx]
         - libgomp      # [linux]
         # libGL
-        - {{ cdt('mesa-libgl-devel') }}  # [linux]
-        - {{ cdt('mesa-dri-drivers') }}  # [linux]
-        - {{ cdt('libxdamage') }}        # [linux]
-        - {{ cdt('libxxf86vm') }}        # [linux]
-        - {{ cdt('libxext') }}           # [linux]
+        - {{ cdt('mesa-libgl-devel') }}  # [linux and build_variant == "qt5"]
+        - libgl-devel                    # [linux]
+        - libglx-devel                   # [linux]
       host:
         - noqt6                          # [build_variant == "qt5"]
         - noqt5                          # [build_variant == "qt6"]
