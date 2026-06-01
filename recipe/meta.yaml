@@ -52,12 +52,13 @@ requirements:
     # qt6 is build with 1.3
     - libzlib =1.3                   # [build_variant == "qt6"]
     - zlib
-    - quazip <1.4                    # [build_variant == "qt5"]
-    - quazip                         # [build_variant == "qt6"]
+    - quazip <1.4                    # [linux and build_variant == "qt5"]
+    - quazip                         # [linux and build_variant == "qt6"]
     - freetype
     - libglu                         # [linux]
     - glew                           # [windows]
-    - mesalib <25.1                  # [linux]
+    - mesalib <25.1                  # [linux and build_variant == "qt5"]
+    - mesalib                        # [linux and build_variant == "qt6"]
 
 test:
   commands:
@@ -94,18 +95,20 @@ outputs:
         - libzlib =1.2                   # [build_variant == "qt5"]
         - libzlib =1.3                   # [build_variant == "qt6"]
         - zlib
-        - quazip <1.4                    # [build_variant == "qt5"]
-        - quazip                         # [build_variant == "qt6"]
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
         - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
-        - mesalib <25.1                  # [linux]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
       run:
         - libgl                          # [linux]
         - libglu                         # [linux]
-        - mesalib <25.1                  # [linux]
-        - quazip <1.4                    # [build_variant == "qt5"]
-        - quazip                         # [build_variant == "qt6"]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
     files:
       include:
         - bin/wb_view
@@ -140,18 +143,20 @@ outputs:
         - libzlib =1.2                   # [build_variant == "qt5"]
         - libzlib =1.3                   # [build_variant == "qt6"]
         - zlib
-        - quazip <1.4                    # [build_variant == "qt5"]
-        - quazip                         # [build_variant == "qt6"]
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
         - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
-        - mesalib <25.1                  # [linux]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
       run:
         - libgl                          # [linux]
         - libglu                         # [linux]
-        - mesalib <25.1                  # [linux]
-        - quazip <1.4                    # [build_variant == "qt5"]
-        - quazip                         # [build_variant == "qt6"]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
     files:
       include:
         - bin/wb_command
