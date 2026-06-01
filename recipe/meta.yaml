@@ -12,8 +12,6 @@ source:
   url: https://github.com/Washington-University/workbench/archive/v{{ version }}.tar.gz
   sha256: a6bd9cf06cb7a734883866b862219b1a1128557e0d23aa7767d5028e28a45901
   patches:
-    - patches/0001-Import-cstdint-into-libCZI.h.patch
-    - patches/0001-Fix-unsafe-narrowing.patch
     - patches/0001-chore-build-Find-QuaZip-library.patch
     # Included in v2.1.0-222-gb08bb2854, remove after next release
     - patches/0001-FreeType-2.13-changed-a-type-from-char-to-unsigned-c.patch
