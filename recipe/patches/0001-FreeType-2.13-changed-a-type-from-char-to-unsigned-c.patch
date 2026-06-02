@@ -1,0 +1,33 @@
+From 72c644e3d5db3aa254805cace0f24929c52fe61d Mon Sep 17 00:00:00 2001
+From: John Harwell <jharwell@wustl.edu>
+Date: Tue, 24 Mar 2026 16:38:41 -0500
+Subject: [PATCH 1/2] FreeType 2.13 changed a type from 'char*' to 'unsigned
+ char*' causing a compilation error on a variable declaration in
+ FTVectoriser.cpp.  To fix it, I replaced 'char*' with 'auto' in the variable
+ declaration in FTVectoriser.cpp.
+
+---
+ src/FtglFont/FTVectoriser.cpp | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/FtglFont/FTVectoriser.cpp b/src/FtglFont/FTVectoriser.cpp
+index 4ab3adffd..0c361f74d 100644
+--- a/src/FtglFont/FTVectoriser.cpp
++++ b/src/FtglFont/FTVectoriser.cpp
+@@ -174,7 +174,12 @@ void FTVectoriser::ProcessContours()
+     for(int i = 0; i < ftContourCount; ++i)
+     {
+         FT_Vector* pointList = &outline.points[startIndex];
+-        char* tagList = &outline.tags[startIndex];
++        /* 
++         * JWH 24mar2026
++         * Freetype 2.13 changed 'char*' to 'unsigned char*' 
++         * Replaced 'char*' with auto; 
++         */
++        auto tagList = &outline.tags[startIndex];
+ 
+         endIndex = outline.contours[i];
+         contourLength =  (endIndex - startIndex) + 1;
+-- 
+2.54.0
+

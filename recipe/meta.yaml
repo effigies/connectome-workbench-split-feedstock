@@ -1,6 +1,6 @@
 {% set name = "connectome-workbench" %}
 {% set version = "2.0.1" %}
-{% set build = 5 %}
+{% set build = 6 %}
 
 {% set build = build + 100 %}  # [build_variant == "qt6"]
 
@@ -15,6 +15,9 @@ source:
     - patches/0001-Import-cstdint-into-libCZI.h.patch
     - patches/0001-Fix-unsafe-narrowing.patch
     - patches/0001-chore-build-Find-QuaZip-library.patch
+    # Included in v2.1.0-222-gb08bb2854, remove after next release
+    - patches/0001-FreeType-2.13-changed-a-type-from-char-to-unsigned-c.patch
+    - patches/0002-Another-fix-for-FreeType-2.13-by-adding-a-char-cast-.patch
 
 build:
   number: {{ build }}
@@ -34,17 +37,14 @@ requirements:
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
     # libGL
-    - {{ cdt('mesa-libgl-devel') }}  # [linux]
-    - {{ cdt('mesa-dri-drivers') }}  # [linux]
-    - {{ cdt('libxdamage') }}        # [linux]
-    - {{ cdt('libxxf86vm') }}        # [linux]
-    - {{ cdt('libxext') }}           # [linux]
+    - {{ cdt('mesa-libgl-devel') }}  # [linux and build_variant == "qt5"]
+    - libgl-devel                    # [linux]
+    - libglx-devel                   # [linux]
   host:
     - noqt6                          # [build_variant == "qt5"]
     - noqt5                          # [build_variant == "qt6"]
     - qt-main                        # [build_variant == "qt5"]
-    # upper bound for freetype constraint
-    - qt6-main >6,<6.10              # [build_variant == "qt6"]
+    - qt6-main >6                    # [build_variant == "qt6"]
     - glib                           # [linux]
     - openssl
     # 1.2 is ABI compatible with 1.3, so this provides more flexibility
@@ -52,13 +52,13 @@ requirements:
     # qt6 is build with 1.3
     - libzlib =1.3                   # [build_variant == "qt6"]
     - zlib
-    # No qt6 build yet with old enough freetype support, use vendored
-    - quazip <1.4                    # [build_variant == "qt5"]
-    # https://github.com/Washington-University/workbench/issues/97
-    - freetype <2.13.3
+    - quazip <1.4                    # [linux and build_variant == "qt5"]
+    - quazip                         # [linux and build_variant == "qt6"]
+    - freetype
     - libglu                         # [linux]
     - glew                           # [windows]
-    - mesalib <25.1                  # [linux]
+    - mesalib <25.1                  # [linux and build_variant == "qt5"]
+    - mesalib                        # [linux and build_variant == "qt6"]
 
 test:
   commands:
@@ -82,33 +82,33 @@ outputs:
         - llvm-openmp  # [osx]
         - libgomp      # [linux]
         # libGL
-        - {{ cdt('mesa-libgl-devel') }}  # [linux]
-        - {{ cdt('mesa-dri-drivers') }}  # [linux]
-        - {{ cdt('libxdamage') }}        # [linux]
-        - {{ cdt('libxxf86vm') }}        # [linux]
-        - {{ cdt('libxext') }}           # [linux]
+        - {{ cdt('mesa-libgl-devel') }}  # [linux and build_variant == "qt5"]
+        - libgl-devel                    # [linux]
+        - libglx-devel                   # [linux]
       host:
         - noqt6                          # [build_variant == "qt5"]
         - noqt5                          # [build_variant == "qt6"]
         - qt-main                        # [build_variant == "qt5"]
-        # upper bound for freetype constraint
-        - qt6-main >6,<6.10              # [build_variant == "qt6"]
+        - qt6-main >6                    # [build_variant == "qt6"]
         - openssl
         - glib                           # [linux]
         - libzlib =1.2                   # [build_variant == "qt5"]
         - libzlib =1.3                   # [build_variant == "qt6"]
         - zlib
-        - quazip <1.4                    # [build_variant == "qt5"]
-        # https://github.com/Washington-University/workbench/issues/97
-        - freetype <2.13.3
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
+        - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
-        - mesalib <25.1                  # [linux]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
       run:
         - libgl                          # [linux]
         - libglu                         # [linux]
-        - mesalib <25.1                  # [linux]
-        - quazip <1.4                    # [build_variant == "qt5"]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
     files:
       include:
         - bin/wb_view
@@ -130,33 +130,33 @@ outputs:
         - llvm-openmp  # [osx]
         - libgomp      # [linux]
         # libGL
-        - {{ cdt('mesa-libgl-devel') }}  # [linux]
-        - {{ cdt('mesa-dri-drivers') }}  # [linux]
-        - {{ cdt('libxdamage') }}        # [linux]
-        - {{ cdt('libxxf86vm') }}        # [linux]
-        - {{ cdt('libxext') }}           # [linux]
+        - {{ cdt('mesa-libgl-devel') }}  # [linux and build_variant == "qt5"]
+        - libgl-devel                    # [linux]
+        - libglx-devel                   # [linux]
       host:
         - noqt6                          # [build_variant == "qt5"]
         - noqt5                          # [build_variant == "qt6"]
         - qt-main                        # [build_variant == "qt5"]
-        # upper bound for freetype constraint
-        - qt6-main >6,<6.10              # [build_variant == "qt6"]
+        - qt6-main >6                    # [build_variant == "qt6"]
         - openssl
         - glib                           # [linux]
         - libzlib =1.2                   # [build_variant == "qt5"]
         - libzlib =1.3                   # [build_variant == "qt6"]
         - zlib
-        - quazip <1.4                    # [build_variant == "qt5"]
-        # https://github.com/Washington-University/workbench/issues/97
-        - freetype <2.13.3
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
+        - freetype
         - libglu                         # [linux]
         - glew                           # [windows]
-        - mesalib <25.1                  # [linux]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
       run:
         - libgl                          # [linux]
         - libglu                         # [linux]
-        - mesalib <25.1                  # [linux]
-        - quazip <1.4                    # [build_variant == "qt5"]
+        - mesalib <25.1                  # [linux and build_variant == "qt5"]
+        - mesalib                        # [linux and build_variant == "qt6"]
+        - quazip <1.4                    # [linux and build_variant == "qt5"]
+        - quazip                         # [linux and build_variant == "qt6"]
     files:
       include:
         - bin/wb_command
