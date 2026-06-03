@@ -1,0 +1,44 @@
+From 610430783657f4746007237bb36e99e00b70d79e Mon Sep 17 00:00:00 2001
+From: Tim Coalson <coalsont@wustl.edu>
+Date: Tue, 24 Jun 2025 22:31:08 -0500
+Subject: [PATCH] Patch ifdef guarding QtEnvironmentVariables include
+
+This is a combination of 3 commits:
+
+70cee3118: fix bugs in interpolate gaps, support qt 5.12, fix a compiler warning
+a74aa2021: attempted general fix for qEnvironment include
+3e0e193ed: fix version test for separation of headers for qEnvironment...
+---
+ src/Common/WorkbenchInstallationAssistant.cxx | 2 +-
+ src/Files/CziImageFile.cxx                    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Common/WorkbenchInstallationAssistant.cxx b/src/Common/WorkbenchInstallationAssistant.cxx
+index 493c644c5..06a1b70d5 100644
+--- a/src/Common/WorkbenchInstallationAssistant.cxx
++++ b/src/Common/WorkbenchInstallationAssistant.cxx
+@@ -25,7 +25,7 @@
+ 
+ #include <QDir>
+ #include <QFileInfo>
+-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
++#if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
+ #include <QtEnvironmentVariables>
+ #endif
+ #include <QtGlobal>
+diff --git a/src/Files/CziImageFile.cxx b/src/Files/CziImageFile.cxx
+index c1819ad5c..53553ae76 100644
+--- a/src/Files/CziImageFile.cxx
++++ b/src/Files/CziImageFile.cxx
+@@ -2255,7 +2255,7 @@ CziImageFile::getPixelRGBA(const int32_t tabIndex,
+                                                                 &coordinate,
+                                                                 &options);
+                 }
+-                catch (const std::logic_error logicError) {
++                catch (const std::logic_error& logicError) {
+                     const AString msg("When reading data from singleChannelTileAccessor: "
+                                       + QString(logicError.what()));
+                     CaretLogSevere(msg);
+-- 
+2.54.0
+
