@@ -1,6 +1,6 @@
 {% set name = "connectome-workbench" %}
-{% set version = "2.0.1" %}
-{% set build = 6 %}
+{% set version = "2.1.0" %}
+{% set build = 0 %}
 
 {% set build = build + 100 %}  # [build_variant == "qt6"]
 
@@ -10,11 +10,12 @@ package:
 
 source:
   url: https://github.com/Washington-University/workbench/archive/v{{ version }}.tar.gz
-  sha256: c80bb248d1d25b36dd92112b9d3fb4585474e117c0c49dc8a222d859624f0376
+  sha256: a6bd9cf06cb7a734883866b862219b1a1128557e0d23aa7767d5028e28a45901
   patches:
-    - patches/0001-Import-cstdint-into-libCZI.h.patch
-    - patches/0001-Fix-unsafe-narrowing.patch
+    # https://github.com/Washington-University/workbench/pull/88
     - patches/0001-chore-build-Find-QuaZip-library.patch
+    # Included in v2.1.0-28-g3e0e193ed, remove after next release
+    - patches/0001-Patch-ifdef-guarding-QtEnvironmentVariables-include.patch
     # Included in v2.1.0-222-gb08bb2854, remove after next release
     - patches/0001-FreeType-2.13-changed-a-type-from-char-to-unsigned-c.patch
     - patches/0002-Another-fix-for-FreeType-2.13-by-adding-a-char-cast-.patch
